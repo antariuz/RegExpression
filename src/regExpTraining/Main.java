@@ -29,22 +29,35 @@ public class Main {
 
     public static List<String> myMatcher(String myPattern, List<String> list) throws MyException {
         Pattern pattern = Pattern.compile(myPattern);
-        Matcher matcher = pattern.matcher(list.get(0));
         List<String> matchesList = new ArrayList<>();
-        if (matcher.find()) {
-            matchesList.add(matcher.group());
-        } else throw new MyException("Nothing is found");
+        Matcher matcher;
+
+        for (String line : list) {
+            matcher = pattern.matcher(line);
+            while (matcher.find()) {
+                matchesList.add(matcher.group());
+            }
+        }
+        if (matchesList.size() == 0) throw new MyException("Nothing is found");
         return matchesList;
     }
 
     public static void main(String[] args) throws MyException {
 
-        final String myFile = "src\\regExpTraining\\text1.txt";
-        final String myPattern = "^текст";
+        final String myFile1 = "src\\regExpTraining\\text1.txt";
+        final String myFile2 = "src\\regExpTraining\\text2.txt";
+        final String myPattern = "[8]\\d{10}" + "|" + "[+3]+\\d{10}" + "|" +
+                "[+3(]+\\d{3}+[)]+\\d{7}" + "|" + "[0]+\\d{2} \\d{3} \\d{2} \\d{2}" + "|" +
+                "[(0]+\\d{2}+[)]\\d{3}[-]\\d{2}[-]\\d{2}" + "|" + "[0]+\\d{2} \\d{3}[-]\\d{2}[-]\\d{2}" + "|" +
+                "[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 
-        List<String> list = fileToLines(myFile);
-        showList(list);
-        System.out.println(myMatcher(myPattern, list));
+        List<String> list1 = fileToLines(myFile1);
+        List<String> list2 = fileToLines(myFile2);
+        //showList(list1);
+        //showList(list2);
+        System.out.println(myMatcher(myPattern, list1));
+        System.out.println(myMatcher(myPattern, list2));
+
 
     }
 }
