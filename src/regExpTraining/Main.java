@@ -75,7 +75,7 @@ public class Main {
 //        System.out.println(myOldMatcher(myPattern, list2));
 //        System.out.println("---------------------------------------------");
 
-        //Новый хомяк (библиотечный java.io) - IO Stream
+//        //Новый хомяк (библиотечный java.io) - IO Stream
 //        FileInputStream fileInputStream1 = new FileInputStream(file1);
 //        FileInputStream fileInputStream2 = new FileInputStream(file2);
 //        BufferedInputStream bufferedInputStream1 = new BufferedInputStream(fileInputStream1, fileInputStream1.available());
@@ -106,8 +106,8 @@ public class Main {
 
 
         //Новый хомяк (библиотечный java.io) - Reader/Writer
-        FileReader reader1 = new FileReader(file1);
-        FileReader reader2 = new FileReader(file2);
+        FileReader reader1 = new FileReader(file1, myCharset);
+        FileReader reader2 = new FileReader(file2, myCharset);
         BufferedReader bufferedReader1 = new BufferedReader(reader1);
         BufferedReader bufferedReader2 = new BufferedReader(reader2);
         String readFile1 = "";
