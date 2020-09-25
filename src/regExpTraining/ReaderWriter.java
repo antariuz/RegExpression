@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IOStream {
+public class ReaderWriter {
 
     private String fileToReadPath;
     private String fileNameToWrite;
     private String parsePattern;
     private Charset charset;
 
-    public IOStream(String fileToReadPath, String fileNameToWrite, String parsePattern, Charset charset) {
+    public ReaderWriter(String fileToReadPath, String fileNameToWrite, String parsePattern, Charset charset) {
         this.fileToReadPath = fileToReadPath;
         this.fileNameToWrite = fileNameToWrite;
         this.parsePattern = parsePattern;
@@ -24,10 +24,13 @@ public class IOStream {
     public void parseFile() {
         try {
             //Read
-            FileInputStream fileInputStream = new FileInputStream(new File(fileToReadPath));
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream, fileInputStream.available());
-            String readFile = new String(bufferedInputStream.readAllBytes(), charset);
-            bufferedInputStream.close();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileToReadPath, charset));
+            String readFile = null;
+            while (bufferedReader.ready()) {
+                if (readFile == null) readFile = bufferedReader.readLine();
+                else readFile = readFile.concat("\n").concat(bufferedReader.readLine());
+            }
+            bufferedReader.close();
 
             //Parsing
             Matcher matcher = Pattern.compile(parsePattern).matcher(readFile);
@@ -38,9 +41,10 @@ public class IOStream {
             if (matchesList.size() == 0) throw new MyException("Nothing is found");
 
             //Write
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(fileNameToWrite));
-            fileOutputStream.write(matchesList.toString().getBytes());
-            fileOutputStream.close();
+            FileWriter fileWriter = new FileWriter(new File(fileNameToWrite));
+            fileWriter.write(matchesList.toString());
+            fileWriter.close();
+
         } catch (IOException | MyException e) {
             e.printStackTrace();
         }
@@ -78,4 +82,5 @@ public class IOStream {
     public void setCharset(Charset charset) {
         this.charset = charset;
     }
+
 }
