@@ -22,12 +22,13 @@ public class IOStream {
     }
 
     public void parseFile() {
-        try {
+        try (FileInputStream fileInputStream = new FileInputStream(new File(fileToReadPath));
+             BufferedInputStream bufferedInputStream =
+                     new BufferedInputStream(fileInputStream, fileInputStream.available());
+             FileOutputStream fileOutputStream = new FileOutputStream(new File(fileNameToWrite))) {
+
             //Read
-            FileInputStream fileInputStream = new FileInputStream(new File(fileToReadPath));
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream, fileInputStream.available());
             String readFile = new String(bufferedInputStream.readAllBytes(), charset);
-            bufferedInputStream.close();
 
             //Parsing
             Matcher matcher = Pattern.compile(parsePattern).matcher(readFile);
@@ -38,9 +39,7 @@ public class IOStream {
             if (matchesList.size() == 0) throw new MyException("Nothing is found");
 
             //Write
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(fileNameToWrite));
             fileOutputStream.write(matchesList.toString().getBytes());
-            fileOutputStream.close();
         } catch (IOException | MyException e) {
             e.printStackTrace();
         }

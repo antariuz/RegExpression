@@ -22,30 +22,31 @@ public class ReaderWriter {
     }
 
     public void parseFile() {
-        try {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileToReadPath, charset));
+             FileWriter fileWriter = new FileWriter(new File(fileNameToWrite))) {
+
             //Read
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileToReadPath, charset));
             String readFile = null;
             while (bufferedReader.ready()) {
                 if (readFile == null) readFile = bufferedReader.readLine();
                 else readFile = readFile.concat("\n").concat(bufferedReader.readLine());
             }
-            bufferedReader.close();
 
             //Parsing
-            Matcher matcher = Pattern.compile(parsePattern).matcher(readFile);
-            List<String> matchesList = new ArrayList<>();
-            while (matcher.find()) {
-                matchesList.add(matcher.group());
-            }
-            if (matchesList.size() == 0) throw new MyException("Nothing is found");
+            List<String> matchesList;
+            if (readFile != null) {
+                Matcher matcher = Pattern.compile(parsePattern).matcher(readFile);
+                matchesList = new ArrayList<>();
+                while (matcher.find()) {
+                    matchesList.add(matcher.group());
+                }
+                if (matchesList.size() == 0) throw new MyException("Nothing is found");
+            } else throw new NullPointerException();
 
             //Write
-            FileWriter fileWriter = new FileWriter(new File(fileNameToWrite));
             fileWriter.write(matchesList.toString());
-            fileWriter.close();
 
-        } catch (IOException | MyException e) {
+        } catch (IOException | MyException | NullPointerException e) {
             e.printStackTrace();
         }
 
