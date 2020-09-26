@@ -1,4 +1,4 @@
-package regExpTraining;
+package regularexpression;
 
 public class MyException extends Exception {
     public MyException(String msg) {

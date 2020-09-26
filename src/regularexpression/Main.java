@@ -1,4 +1,4 @@
-package regExpTraining;
+package regularexpression;
 
 import java.nio.charset.Charset;
 
@@ -6,10 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String fileToReadPath1 = "src\\regExpTraining\\text1.txt";
-        String fileToReadPath2 = "src\\regExpTraining\\text2.txt";
-        String fileNameToWrite1 = "src\\regExpTraining\\parsedText1_IOStream.txt";
-        String fileNameToWrite2 = "src\\regExpTraining\\parsedText2_ReaderWriter.txt";
+        String fileToReadPath1 = "src\\regularexpression\\text1.txt";
+        String fileToReadPath2 = "src\\regularexpression\\text2.txt";
+        String fileNameToWrite1 = "src\\regularexpression\\parsedText1_IOStream.txt";
+        String fileNameToWrite2 = "src\\regularexpression\\parsedText2_ReaderWriter.txt";
         String parsePattern = "[8]\\d{10}" + "|" + "[+3]+\\d{10}" + "|" +
                 "[+3(]+\\d{3}+[)]+\\d{7}" + "|" + "[0]+\\d{2} \\d{3} \\d{2} \\d{2}" + "|" +
                 "[(0]+\\d{2}+[)]\\d{3}[-]\\d{2}[-]\\d{2}" + "|" + "[0]+\\d{2} \\d{3}[-]\\d{2}[-]\\d{2}" + "|" +

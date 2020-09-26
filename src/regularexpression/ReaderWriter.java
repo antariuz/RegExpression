@@ -1,4 +1,4 @@
-package regExpTraining;
+package regularexpression;
 
 import java.io.*;
 import java.nio.charset.Charset;
